@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies @ Mariana Tek</title>
+</head>
+<body>
+    <h1>Movies @ Mariana Tek</h1>
+
+    <form method="get">
+        <label for="genre">Filter by Genre:</label>
+        <select name="genre" id="genre" multiple>
+            {% for movie in movies %}
+                {% for genre in movie.genres.split(',') %}
+                    <option value="{{ genre }}" {% if genre in genre_filter %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            {% endfor %}
+        </select>
+        <button type="submit">Apply Filter</button>
+    </form>
+
+    <form method="get">
+        <label for="title">Search by Title:</label>
+        <input type="text" name="title" id="title" value="{{ title_search }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        {% for movie in movies %}
+            <li>
+                <h2>{{ movie.title }}</h2>
+                <img src="{{ movie.poster }}" alt="{{ movie.title }} Poster">
+                <p>Genres: {{ movie.genres }}</p>
+                <p>Rating: {{ movie.rating }}</p>
+                <p>Year Release: {{ movie.year_release }}</p>
+                <p>Metacritic Rating: {{ movie.metacritic_rating }}</p>
+                <p>Runtime: {{ movie.runtime }} mins</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
